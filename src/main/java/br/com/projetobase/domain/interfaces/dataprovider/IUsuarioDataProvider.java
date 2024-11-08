@@ -8,4 +8,7 @@ public interface IUsuarioDataProvider {
 
     UsuarioEntity editar(UsuarioEntity usuarioEntity);
 
+    boolean existePorCpf(String cpf);
+
+    boolean existePorEmail(String email);
 }

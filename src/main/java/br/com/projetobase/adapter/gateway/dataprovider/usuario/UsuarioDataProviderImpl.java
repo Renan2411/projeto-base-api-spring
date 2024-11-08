@@ -20,4 +20,14 @@ public class UsuarioDataProviderImpl implements IUsuarioDataProvider {
     public UsuarioEntity editar(UsuarioEntity usuarioEntity) {
         return usuarioRepository.save(usuarioEntity);
     }
+
+    @Override
+    public boolean existePorCpf(String cpf) {
+        return usuarioRepository.existsByCpf(cpf);
+    }
+
+    @Override
+    public boolean existePorEmail(String email) {
+        return usuarioRepository.existsByEmail(email);
+    }
 }
