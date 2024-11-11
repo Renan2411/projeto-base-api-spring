@@ -13,6 +13,7 @@ public class CriarUsuarioOutputConverter {
                 .nome(usuarioEntity.getNome())
                 .email(usuarioEntity.getEmail())
                 .cpf(usuarioEntity.getCpf())
+                .dataNascimento(usuarioEntity.getDataNascimento())
                 .build();
     }
 
