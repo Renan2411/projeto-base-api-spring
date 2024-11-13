@@ -1,5 +1,6 @@
 package br.com.projetobase.adapter.gateway.controller.exception;
 
+import br.com.projetobase.domain.exception.generic.GenericNotFoundException;
 import br.com.projetobase.domain.exception.generic.GenericValidationException;
 import br.com.projetobase.domain.exception.generic.GenericValidationExceptionList;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({GenericValidationExceptionList.class})
-    public ResponseEntity<Object> handleGenericExceptionList(GenericValidationExceptionList exceptions, HttpServletRequest request) {
+    public ResponseEntity<Object> handleGenericValidationExceptionList(GenericValidationExceptionList exceptions, HttpServletRequest request) {
         String path = request.getRequestURI();
         List<ErrorMessage> response = exceptions.getExceptions().stream()
                 .map(exception -> new ErrorMessage(exception.getClass().getName(), exception.getMessage(), path, exception.getArgs()))
@@ -28,11 +29,19 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({GenericValidationException.class})
-    public ResponseEntity<Object> handleGenericException(GenericValidationException exception, HttpServletRequest request) {
+    public ResponseEntity<Object> handleGenericValidationException(GenericValidationException exception, HttpServletRequest request) {
         String path = request.getRequestURI();
         ErrorMessage response = new ErrorMessage(exception.getClass().getName(), exception.getMessage(), path, exception.getArgs());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({GenericNotFoundException.class})
+    public ResponseEntity<Object> handleGenericNotFoundException(GenericNotFoundException exception, HttpServletRequest request) {
+        String path = request.getRequestURI();
+        ErrorMessage response = new ErrorMessage(exception.getClass().getName(), exception.getMessage(), path, exception.getArgs());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @Data

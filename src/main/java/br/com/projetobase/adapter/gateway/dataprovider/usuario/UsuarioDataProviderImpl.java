@@ -5,6 +5,8 @@ import br.com.projetobase.domain.interfaces.dataprovider.IUsuarioDataProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @AllArgsConstructor
 public class UsuarioDataProviderImpl implements IUsuarioDataProvider {
@@ -29,5 +31,15 @@ public class UsuarioDataProviderImpl implements IUsuarioDataProvider {
     @Override
     public boolean existePorEmail(String email) {
         return usuarioRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Optional<UsuarioEntity> buscarPorId(Long idUsuario) {
+        return usuarioRepository.findById(idUsuario);
+    }
+
+    @Override
+    public void excluir(Long idUsuario) {
+        usuarioRepository.excluirPorId(idUsuario);
     }
 }
