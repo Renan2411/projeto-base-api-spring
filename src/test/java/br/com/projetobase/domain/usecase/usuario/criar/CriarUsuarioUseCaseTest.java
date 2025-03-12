@@ -1,32 +1,49 @@
 package br.com.projetobase.domain.usecase.usuario.criar;
 
+import br.com.projetobase.domain.entity.RolesEntity;
 import br.com.projetobase.domain.entity.UsuarioEntity;
 import br.com.projetobase.domain.exception.generic.GenericValidationException;
 import br.com.projetobase.domain.exception.generic.GenericValidationExceptionList;
+import br.com.projetobase.domain.interfaces.dataprovider.IRolesDataProvider;
 import br.com.projetobase.domain.interfaces.dataprovider.IUsuarioDataProvider;
+import br.com.projetobase.domain.interfaces.dataprovider.IUsuarioRoleDataProvider;
 import br.com.projetobase.domain.usecase.usuario.criar.converter.CriarUsuarioOutputConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class CriarUsuarioUseCaseTest {
 
-    @Mock
+    @MockBean
     private IUsuarioDataProvider iUsuarioDataProvider;
 
-    CriarUsuarioUseCase useCase;
+    @MockBean
+    private IRolesDataProvider iRolesDataProvider;
+
+    @MockBean
+    private IUsuarioRoleDataProvider iUsuarioRoleDataProvider;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private CriarUsuarioUseCase useCase;
 
     @Before
     public void prepararTest() {
@@ -43,10 +60,16 @@ public class CriarUsuarioUseCaseTest {
         when(iUsuarioDataProvider.existePorEmail(anyString()))
                 .thenReturn(Boolean.FALSE);
 
+        when(iRolesDataProvider.buscarPorNome(any()))
+                .thenReturn(Optional.ofNullable(RolesEntity.builder()
+                        .id(1L)
+                        .build()));
+
         CriarUsuarioInput entrada = CriarUsuarioInput.builder()
                 .cpf("51459191749")
                 .nome("Teste")
                 .email("teste@teste.com")
+                .senha("senha123")
                 .dataNascimento(dataNascimento)
                 .build();
 
@@ -81,6 +104,7 @@ public class CriarUsuarioUseCaseTest {
                 .cpf("51459191749")
                 .nome("Teste")
                 .email("teste@teste.com")
+                .senha("senha123")
                 .dataNascimento(dataNascimento)
                 .build();
 
@@ -111,10 +135,16 @@ public class CriarUsuarioUseCaseTest {
         when(iUsuarioDataProvider.existePorEmail(anyString()))
                 .thenReturn(Boolean.TRUE);
 
+        when(iRolesDataProvider.buscarPorNome(any()))
+                .thenReturn(Optional.ofNullable(RolesEntity.builder()
+                        .id(1L)
+                        .build()));
+
         CriarUsuarioInput entrada = CriarUsuarioInput.builder()
                 .cpf("51459191749")
                 .nome("Teste")
                 .email("teste@teste.com")
+                .senha("senha123")
                 .dataNascimento(dataNascimento)
                 .build();
 
@@ -174,6 +204,9 @@ public class CriarUsuarioUseCaseTest {
     public CriarUsuarioUseCase criarUseCase() {
         return CriarUsuarioUseCase.builder()
                 .iUsuarioDataProvider(iUsuarioDataProvider)
+                .iRolesDataProvider(iRolesDataProvider)
+                .iUsuarioRoleDataProvider(iUsuarioRoleDataProvider)
+                .passwordEncoder(passwordEncoder)
                 .outputConverter(CriarUsuarioOutputConverter.builder().build())
                 .build();
     }

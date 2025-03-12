@@ -39,6 +39,9 @@ public class UsuarioEntity {
     @Column(name = "US_CPF")
     private String cpf;
 
+    @Column(name = "US_SENHA")
+    private String senha;
+
     @Column(name = "US_DATA_NASCIMENTO")
     private OffsetDateTime dataNascimento;
 

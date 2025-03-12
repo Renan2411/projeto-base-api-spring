@@ -17,4 +17,8 @@ public interface IUsuarioDataProvider {
     Optional<UsuarioEntity> buscarPorId(Long idUsuario);
 
     void excluir(Long idUsuario);
+
+    Optional<UsuarioEntity> buscarPorCpf(String cpf);
+
+    Optional<UsuarioEntity> buscarPorEmail(String login);
 }

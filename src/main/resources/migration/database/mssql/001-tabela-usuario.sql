@@ -7,9 +7,10 @@ CREATE SEQUENCE [seq_usuario]
 
 CREATE TABLE [tb_usuario] (
     [us_id]              INTEGER NOT NULL,
-    [us_nome]            VARCHAR(255),
-    [us_cpf]             VARCHAR(255),
-    [us_email]           VARCHAR(255),
+    [us_nome]            VARCHAR(255) NOT NULL,
+    [us_cpf]             VARCHAR(255) NOT NULL,
+    [us_email]           VARCHAR(255) NOT NULL,
+    [us_senha]           VARCHAR(500) NOT NULL,
     [us_data_nascimento] DATETIME2(6)
 );
 

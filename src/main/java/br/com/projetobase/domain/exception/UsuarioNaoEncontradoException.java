@@ -8,4 +8,12 @@ public class UsuarioNaoEncontradoException extends GenericNotFoundException {
         super(String.format("Usuário de id %d não encontrado.", idUsuario));
     }
 
+    public UsuarioNaoEncontradoException(String cpf) {
+        super(String.format("Usuário de cpf %s não encontrado.", cpf));
+    }
+
+    public UsuarioNaoEncontradoException(String campo, String valorCampo) {
+        super(String.format("Usuário de %s %s não encontrado.", campo, valorCampo));
+    }
+
 }

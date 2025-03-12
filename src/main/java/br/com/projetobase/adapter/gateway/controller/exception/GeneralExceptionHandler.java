@@ -1,5 +1,6 @@
 package br.com.projetobase.adapter.gateway.controller.exception;
 
+import br.com.projetobase.domain.exception.generic.GenericAuthenticationException;
 import br.com.projetobase.domain.exception.generic.GenericNotFoundException;
 import br.com.projetobase.domain.exception.generic.GenericValidationException;
 import br.com.projetobase.domain.exception.generic.GenericValidationExceptionList;
@@ -44,6 +45,14 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({GenericAuthenticationException.class})
+    public ResponseEntity<Object> handleGenericAuthenticationException(GenericAuthenticationException exception, HttpServletRequest request){
+        String path = request.getRequestURI();
+        ErrorMessage response = new ErrorMessage(exception.getClass().getName(), exception.getMessage(), path);
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
     @Data
     @AllArgsConstructor
     static class ErrorMessage {
@@ -51,6 +60,12 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         String message;
         String path;
         List<String> args;
+
+        public ErrorMessage(String name, String message, String path) {
+            this.name = name;
+            this.message = message;
+            this.path = path;
+        }
     }
 
     @Data

@@ -9,4 +9,9 @@
                  relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
     </changeSet>
 
+    <changeSet id="002-roles-padrao" author="renan.duarte">
+        <sqlFile dbms="h2" encoding="utf8" path="h2/002-roles-padrao.sql"
+                 relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+
 </databaseChangeLog>

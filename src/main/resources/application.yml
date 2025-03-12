@@ -15,3 +15,11 @@ spring:
   liquibase:
     change-log: classpath:/migration/database/master.xml
     database-change-log-lock-table: DATABASECHANGLOG
+
+server:
+  port: 8075
+
+security:
+  jwt:
+    validity: 10000
+    chave-assinatura: CHAVESECRETA

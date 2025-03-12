@@ -1,7 +1,11 @@
 package br.com.projetobase.adapter.gateway.controller.usuario;
 
+import br.com.projetobase.adapter.gateway.dataprovider.usuarioRole.UsuarioRoleRepository;
+import br.com.projetobase.domain.entity.RolesEntity;
+import br.com.projetobase.domain.entity.UsuarioRoleEntity;
 import br.com.projetobase.domain.exception.generic.GenericValidationException;
 import br.com.projetobase.domain.exception.generic.GenericValidationExceptionList;
+import br.com.projetobase.domain.interfaces.dataprovider.IUsuarioRoleDataProvider;
 import br.com.projetobase.domain.usecase.usuario.criar.CriarUsuarioInput;
 import br.com.projetobase.helper.JsonHelper;
 import org.junit.Test;
@@ -20,6 +24,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,6 +41,9 @@ public class CriarUsuarioControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private UsuarioRoleRepository usuarioRoleRepository;
+
     @Test
     @Rollback
     @Transactional
@@ -46,6 +54,7 @@ public class CriarUsuarioControllerTest {
                 .nome("Teste")
                 .cpf("07441855721")
                 .email("teste2@gmail.com")
+                .senha("senha123")
                 .dataNascimento(dataNascimento)
                 .build();
 
@@ -70,6 +79,7 @@ public class CriarUsuarioControllerTest {
                 .nome("Teste")
                 .cpf("80220885443")
                 .email("teste2@gmail.com")
+                .senha("senha123")
                 .dataNascimento(dataNascimento)
                 .build();
 
@@ -92,6 +102,7 @@ public class CriarUsuarioControllerTest {
                 .nome("Teste")
                 .cpf("90220885443")
                 .email("teste@gmail.com")
+                .senha("senha123")
                 .dataNascimento(dataNascimento)
                 .build();
 

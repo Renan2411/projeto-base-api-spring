@@ -1,5 +1,8 @@
 package br.com.projetobase.adapter.gateway.controller.usuario;
 
+import br.com.projetobase.application.config.auth.CustomUserDetailService;
+import br.com.projetobase.application.config.auth.JwtService;
+import br.com.projetobase.domain.entity.RolesEntity;
 import br.com.projetobase.domain.exception.UsuarioNaoEncontradoException;
 import br.com.projetobase.domain.exception.generic.GenericValidationException;
 import br.com.projetobase.domain.exception.generic.GenericValidationExceptionList;
@@ -10,7 +13,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,9 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -115,5 +124,4 @@ public class EditarUsuarioControllerTest {
                 .andExpect(jsonPath("$.mensagens[0].message", equalTo("Ausência do email do usuário.")))
                 .andExpect(mvcResult -> assertTrue(mvcResult.getResolvedException() instanceof GenericValidationExceptionList));
     }
-
 }

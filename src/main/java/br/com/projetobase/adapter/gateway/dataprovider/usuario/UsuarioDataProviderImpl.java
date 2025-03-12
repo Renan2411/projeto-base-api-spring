@@ -3,6 +3,7 @@ package br.com.projetobase.adapter.gateway.dataprovider.usuario;
 import br.com.projetobase.domain.entity.UsuarioEntity;
 import br.com.projetobase.domain.interfaces.dataprovider.IUsuarioDataProvider;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -41,5 +42,15 @@ public class UsuarioDataProviderImpl implements IUsuarioDataProvider {
     @Override
     public void excluir(Long idUsuario) {
         usuarioRepository.excluirPorId(idUsuario);
+    }
+
+    @Override
+    public Optional<UsuarioEntity> buscarPorCpf(String cpf) {
+        return usuarioRepository.findByCpf(cpf);
+    }
+
+    @Override
+    public Optional<UsuarioEntity> buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 }

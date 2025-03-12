@@ -1,9 +1,17 @@
+security:
+  jwt:
+    validity: 10000
+    chave-assinatura: TESTE
+
 spring:
   application:
     name: projeto-base
+    auth:
+      secret-key: MY_SECRET
+      token-validity: 3600000
   datasource:
     driver-class-name: org.h2.Driver
-    name: az
+    name: projetobase
     url: jdbc:h2:mem:testdb
     username: sa
     password: ''
@@ -26,6 +34,7 @@ spring:
     enabled: true
   profiles:
     default: test
+    active: test
 
 logging:
   path: target

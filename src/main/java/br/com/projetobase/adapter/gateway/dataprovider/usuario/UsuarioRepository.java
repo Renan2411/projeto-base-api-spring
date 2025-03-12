@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
@@ -18,4 +20,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
     @Query("DELETE FROM UsuarioEntity usuarioEntity WHERE usuarioEntity.id = :id")
     void excluirPorId(@Param("id") Long idUsuario);
 
+    Optional<UsuarioEntity> findByCpf(String cpf);
+
+    Optional<UsuarioEntity> findByEmail(String email);
 }
